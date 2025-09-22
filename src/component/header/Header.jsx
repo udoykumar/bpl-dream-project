@@ -1,6 +1,6 @@
 import React from "react";
 import navImg from "../../assets/logo.png";
-const Header = () => {
+const Header = ({ availableBalance }) => {
   return (
     <div className="shadow-sm bg-base-100">
       <div className="navbar  max-w-[1200px] mx-auto">
@@ -10,7 +10,7 @@ const Header = () => {
           </a>
         </div>
         <div className="flex-none">
-          <span className="mr-1">000</span>
+          <span className="mr-1">{availableBalance}</span>
           <span className="mr-1"> Coin💲</span>
         </div>
       </div>
