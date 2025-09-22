@@ -1,31 +1,33 @@
-import React from "react";
+import React, { Suspense } from "react";
+import Header from "./component/header/Header";
+import AvailablePlayers from "./component/availabePlayers/AvailablePlayers";
+import Selected from "./component/selectedPlayers/Selected";
+
+const fetchPlayers = async () => {
+  const res = await fetch("/player-data.json");
+  return res.json();
+};
 
 const App = () => {
+  const fetchPromise = fetchPlayers();
   return (
-    <div>
-      <div className="navbar bg-base-100 shadow-sm">
-        <div className="flex-1">
-          <a className="btn btn-ghost text-xl">daisyUI</a>
-        </div>
-        <div className="flex-none">
-          <button className="btn btn-square btn-ghost">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              className="inline-block h-5 w-5 stroke-current"
-            >
-              {" "}
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
-              ></path>{" "}
-            </svg>
+    <div className="">
+      <Header />
+      <div className="flex justify-between mt-5 max-w-[1200px] mx-auto">
+        <h1>Available Player</h1>
+        <div className="space-x-3 ">
+          <button className="btn m">Available</button>
+          <button className="btn m">
+            selected <span>(0)</span>
           </button>
         </div>
       </div>
+      <Suspense
+        fallback={<span className="loading loading-spinner loading-xl"></span>}
+      >
+        <AvailablePlayers fetchPromise={fetchPromise} />
+      </Suspense>
+      {/* <Selected /> */}
     </div>
   );
 };
